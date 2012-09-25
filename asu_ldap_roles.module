@@ -1,0 +1,3 @@
+<?php
+
+include_once('asu_ldap_roles.features.inc');
