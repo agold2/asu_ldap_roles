@@ -170,7 +170,8 @@ UCEMTPEXPL
 UCEXPLORE
 UCHSCIEXPL
 UCHUFAEXPL
-UCSBSEXPL',
+UCSBSEXPL
+',
 );
 $profile_fields['profile_major_code_tempe'] = array(
   'title' => 'Tempe Major Code',
@@ -184,10 +185,11 @@ $profile_fields['profile_major_code_tempe'] = array(
   'register' => '0',
   'visibility' => '2',
   'autocomplete' => '0',
-  'options' => 'TEMPE1
-TEMPE2
-ESCOMSCMCS
-TSGRNONDGR',
+  'options' => 'TEMPE1 
+TEMPE2 
+ESCOMSCMCS 
+TSGRNONDGR
+',
 );
 return $profile_fields;
 }

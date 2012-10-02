@@ -1,0 +1,72 @@
+<?php
+/*
+ * Implements hook_install()
+ */
+function asu_ldap_roles_enable() {
+
+$cas_attributes = array('sync_every_login' => 1,
+  'relations' => array(
+     'name' => '',
+     'mail' => '',
+     2 => '[cas-ldap-majorcode]',
+     4 => '[cas-ldap-majorcode]',
+   ),
+   'roles' => array(
+     'manage' => array(
+       '1419717644' => 1419717644,
+       '1368107126' => 1368107126,
+       '3519698132' => 0,
+       '3088675909' => 0,
+       '3819619309' => 0,
+       '588493425' => 0,
+       '3866758342' => 0,
+      )
+     ),
+   'ldap' => array('server' => 1),
+  );
+
+  variable_set('cas_attributes', $cas_attributes);
+
+// Add ASU LDAP Server
+    $query = "INSERT INTO {ldapauth} VALUES (1,'asu_ldap',1,'ds.asu.edu',389,0,0,'ou=People,o=asu.edu','asuriteid','mail','','','','',0)";
+    db_query($query);
+}
+
+
+/*
+
+cas_attributes: Array
+(
+    [sync_every_login] => 1
+    [relations] => Array
+        (
+            [name] => 
+            [mail] => 
+            [2] => [cas-ldap-majorcode]
+            [4] => [cas-ldap-majorcode]
+        )
+
+    [roles] => Array
+        (
+            [manage] => Array
+                (
+                    [1419717644] => 1419717644
+                    [1368107126] => 1368107126
+                    [3519698132] => 0
+                    [3088675909] => 0
+                    [3819619309] => 0
+                    [588493425] => 0
+                    [3866758342] => 0
+                )
+
+            [mapping] => 
+        )
+
+    [ldap] => Array
+        (
+            [server] => 1
+        )
+
+)
+
+*/
