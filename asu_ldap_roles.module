@@ -1,3 +1,41 @@
 <?php
 
 include_once('asu_ldap_roles.features.inc');
+
+
+/* Block to show for access denied for NYT page */
+function asu_ldap_roles_block($op = 'list', $delta = 0, $edit = array()) {
+  switch ($op) {
+    case 'list':
+      $blocks[0] = array(
+        'info' => t('NYT Access Denied'),        
+        'status' => 1,
+        'region' => 'content_top',
+      );
+      return $blocks;
+
+    case 'view':
+      switch ($delta) {
+            case 0:
+                  global $user;
+                  if (in_array('administrator', array_values($user->roles))) {
+                    return FALSE;
+                  }
+                  if (in_array('Downtown', array_values($user->roles))) {
+                    return FALSE;
+                  }
+                  if ((arg(0) == 'node') && is_numeric(arg(1)) && (! arg(2))) {
+                    $node = node_load(arg(1));
+                    if ($node->path != 'nyt') {
+                      return FALSE;
+                    } 
+                  }
+              //$block['subject'] = "NYT Access Denied";
+              $block['content'] = '<p style="background:white;padding:10px;">This service is available to students whose college and academic plan is located at the Downtown Phoenix campus.  If you feel that your profile meets this criteria and you have been denied access, please contact <a href="mailto:Ronald.Briggs@asu.edu">Ronald Briggs</a></p>';
+        //      $block['region'] = 'content_bottom';
+              break;
+          }    
+  }
+          return $block;
+}
+

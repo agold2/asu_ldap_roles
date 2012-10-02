@@ -31,4 +31,9 @@ to a profile field. The value of the profile field is checked each time a user a
 and if present, a role is added to the user. The Campus taxonomy is used to
 grant access to content.
 
+Creates Campus Taxonomy with "Downtown", "Poly", "Tempe", and "West" terms.
+
+
+Note: Currently only works with Downtown campus. Easy to extend for other
+campuses. 
 

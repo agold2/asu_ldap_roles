@@ -30,43 +30,50 @@ $cas_attributes = array('sync_every_login' => 1,
 // Add ASU LDAP Server
     $query = "INSERT INTO {ldapauth} VALUES (1,'asu_ldap',1,'ds.asu.edu',389,0,0,'ou=People,o=asu.edu','asuriteid','mail','','','','',0)";
     db_query($query);
+
+  $vid = db_result(db_query("SELECT vid from {vocabulary} WHERE name = 'Campus'"));
+
+  if (!$vid) {
+    $vocabulary = array(
+      'name' => t("Campus"), //Human readable name of the vocabulary
+      'multiple' => 1, //set 1 to allow multiple selection
+      'required' => 0, //set 1 to make the terms mandatory to be selected
+      'hierarchy' => 0, //set 1 to allow and create hierarchy of the terms within the vocabulary
+      'relations' => 0, //set 1 to set and allow relation amongst multiple terms
+      'module' => 'asu_ldap_roles', //provide the module name in which the vocabulary is defined and which is calling this function
+      'weigth' => 0,
+      'nodes' => array('fixed_width_landing_page' => 'fixed_width_landing_page'),
+    );
+    taxonomy_save_vocabulary($vocabulary); 
+  }
+
+
+// Add terms to Campus Vocabulary (features supports Vocabulary, but not terms)
+    $vid = db_result(db_query("SELECT vid from {vocabulary} WHERE name = 'Campus'"));
+    $tid = db_result(db_query("SELECT tid from {term_data} WHERE name ='Downtown' AND vid=%d", $vid));
+    if (!$tid) {
+    $term_names = array("Downtown", "Poly", "Tempe", "West");
+    foreach ($term_names as $key) {
+      $term = array(
+        'vid' => $vid, // Voacabulary ID
+        'name' => $key, // Term Name
+        'synonyms' => NULL, // (Optional) Synonym of this term
+        'parent' => NULL, // (Optional) Term ID of a parent term
+        'relations' => NULL, // (Optional) Related Term IDs
+       );
+      taxonomy_save_term($term);
+    }
+    }
+
+// Configure Downtown taxonomy term access for Downtown, anonymous, and 
+// authenticated roles 
+  $tid = db_result(db_query("SELECT tid from {term_data} WHERE name = 'Downtown' and vid=%d",$vid));
+  db_query("INSERT INTO {term_access} VALUES (%d,1419717644,1,0,0,0,0),
+                                             (%d,2,2,0,0,0,0),
+                                             (%d,1,2,0,0,0,0)", $tid, $tid, $tid);
+
+  $query = "INSERT INTO {term_access_defaults} VALUES (0,1419717644,0,0,0,0,0),
+                                                      (0,1368107126,0,0,0,0,0)";
+  db_query($query);
+
 }
-
-
-/*
-
-cas_attributes: Array
-(
-    [sync_every_login] => 1
-    [relations] => Array
-        (
-            [name] => 
-            [mail] => 
-            [2] => [cas-ldap-majorcode]
-            [4] => [cas-ldap-majorcode]
-        )
-
-    [roles] => Array
-        (
-            [manage] => Array
-                (
-                    [1419717644] => 1419717644
-                    [1368107126] => 1368107126
-                    [3519698132] => 0
-                    [3088675909] => 0
-                    [3819619309] => 0
-                    [588493425] => 0
-                    [3866758342] => 0
-                )
-
-            [mapping] => 
-        )
-
-    [ldap] => Array
-        (
-            [server] => 1
-        )
-
-)
-
-*/
