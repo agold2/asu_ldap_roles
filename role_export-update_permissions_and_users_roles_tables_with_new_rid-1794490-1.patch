@@ -1,0 +1,13 @@
+diff --git a/role_export.module b/role_export.module
+index 8ff1268..cbb272c 100644
+--- a/role_export.module
++++ b/role_export.module
+@@ -120,6 +120,8 @@ function role_export_normalize() {
+       $new_rid = role_export_generate_id($role->machine_name);
+       // Update the current role with the new data.
+       db_query("UPDATE {role} SET rid = %d, machine_name = '%s' WHERE rid = %d", $new_rid, $role->machine_name, $role->rid);
++      db_query("UPDATE {permission} SET rid = %d WHERE rid = %d", $new_rid, $role->rid);
++      db_query("UPDATE {users_roles} SET rid = %d WHERE rid = %d", $new_rid, $role->rid);
+     }
+   }
+ }

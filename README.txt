@@ -18,9 +18,12 @@ Installation:
    modified so manual installation shouldn't be necessary, so that enabling the 
    feature with drush will resolve any dependencies.
 
-3) Enable this feature
+3) Apply patches to features and role_export. Insructions on how to apply patches:
+   http://drupal.org/patch/apply
 
-4) Go to http://drupal_site/admin/settings/ldap/ldapauth/edit/1, scroll all
+4) Enable this feature
+
+5) Go to http://drupal_site/admin/settings/ldap/ldapauth/edit/1, scroll all
 the way down and input your LDAP APP ID and password.
 
 How the feature works
