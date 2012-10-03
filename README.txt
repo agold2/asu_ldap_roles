@@ -8,12 +8,12 @@ Installation:
 
 1) Put this feature in sites/all/modules/custom/
 
-2) Install AND enable LDAP Integration 6.x-beta 2
+2) Install AND enable LDAP Integration 6.x-beta 2, profile taxonomy_access rules_admin
    * Before enabling this feature download AND enable LDAP Integration.
      + http://ftp.drupal.org/files/projects/ldap_integration-6.x-1.0-beta2.tar.gz
      + Or with Drush:
-       $ drush dl  ldap_integration-6.x-1.0-beta2
-       $ drush en ldapauth
+       $ drush dl  ldap_integration-6.x-1.0-beta2 profile taxonomy_access rules
+       $ drush en ldapauth profile taxonomy_access rules_admin
    When this bug (http://drupal.org/node/1742768) is fixed this feature will be
    modified so manual installation shouldn't be necessary, so that enabling the 
    feature with drush will resolve any dependencies.
