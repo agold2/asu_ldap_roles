@@ -25,12 +25,25 @@ $cas_attributes = array('sync_every_login' => 1,
    'ldap' => array('server' => 1),
   );
 
-  variable_set('cas_attributes', $cas_attributes);
+$cas_auto_assigned_role = array(
+    '3088675909' => 3088675909,
+    '2' => 1,
+    '3519698132' => 0,
+    '3819619309' => 0,
+    '588493425' => 0,
+    '1419717644' => 0,
+    '1368107126' => 0,
+    '3866758342' => 0,
+   );
 
+
+  variable_set('cas_attributes', $cas_attributes);
+  variable_set('cas_auto_assigned_role', $cas_auto_assigned_role);
 // Add ASU LDAP Server
     $query = "INSERT INTO {ldapauth} VALUES (1,'asu_ldap',1,'ds.asu.edu',389,0,0,'ou=People,o=asu.edu','asuriteid','mail','','','','',0)";
     db_query($query);
 
+// Add Campus Vocabulary, if it doesn't exist.
   $vid = db_result(db_query("SELECT vid from {vocabulary} WHERE name = 'Campus'"));
 
   if (!$vid) {
@@ -64,7 +77,6 @@ $cas_attributes = array('sync_every_login' => 1,
       taxonomy_save_term($term);
     }
     }
-
 // Configure Downtown taxonomy term access for Downtown, anonymous, and 
 // authenticated roles 
   $tid = db_result(db_query("SELECT tid from {term_data} WHERE name = 'Downtown' and vid=%d",$vid));
@@ -75,5 +87,4 @@ $cas_attributes = array('sync_every_login' => 1,
   $query = "INSERT INTO {term_access_defaults} VALUES (0,1419717644,0,0,0,0,0),
                                                       (0,1368107126,0,0,0,0,0)";
   db_query($query);
-
 }
