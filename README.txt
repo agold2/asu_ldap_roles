@@ -40,3 +40,13 @@ Creates Campus Taxonomy with "Downtown", "Poly", "Tempe", and "West" terms.
 Note: Currently only works with Downtown campus. Easy to extend for other
 campuses. 
 
+
+Troubleshooting: 
+===============
+
+On our site CKeditor was being loaded on some admin config pages. We needed to exclude the following
+paths at https://eoss-qa.asu.edu/admin/settings/ckeditor/editg
+seven:admin/user/cas/settings.edit-cas-pages
+seven:admin/user/cas/settings.edit-cas-exclude
+seven:admin/settings/ldap/ldapauth/edit/1.edit-basedn
+seven:admin/user/profile/edit/1.edit-options
