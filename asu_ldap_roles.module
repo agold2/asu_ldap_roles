@@ -3,6 +3,50 @@
 include_once('asu_ldap_roles.features.inc');
 
 
+/**
+ * Implements hook_menu().
+ */
+function asu_ldap_roles_menu() {
+  return array(
+    'admin/settings/asu_ldap_roles' => array(
+      'title' => 'ASU LDAP Roles',
+      'description' => 'Configure major codes for each campus.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('asu_ldap_roles_admin_settings'),
+      'access arguments' => array('administer ldap modules'),
+     'file' => 'asu_ldap_roles.admin.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_perm().
+ */
+function asu_ldap_roles_perm() {
+  return array(
+    'administer major codes',
+  );
+}
+
+/**
+ * Implements hook_user().
+ */
+function asu_ldap_roles_user($op, &$edit, &$account) {
+  switch($op) {
+    case 'insert':
+    case 'submit':
+      $tempe = explode("\n", variable_get('asu_ldap_roles_tempe'));
+      $downtown = explode("\n", variable_get('asu_ldap_roles_downtown'));
+      if (in_array($account->profile_major_code, $downtown)) {
+        $edit['roles'][1419717644] = 'Downtown';
+      }
+      if (in_array($account->profile_major_code, $tempe)) {
+        $edit['roles'][1368107126] = 'Tempe';
+      }
+      break;
+  }
+}
+
 /* Block to show for access denied for NYT page */
 function asu_ldap_roles_block($op = 'list', $delta = 0, $edit = array()) {
   switch ($op) {
