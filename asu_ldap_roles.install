@@ -4,10 +4,18 @@
  */
 function asu_ldap_roles_enable() {
 
-// Add ASU LDAP Server
-    $query = "INSERT INTO {ldapauth} VALUES (1,'asu_ldap',1,'ds.asu.edu',389,0,0,'ou=People,o=asu.edu','asuriteid','mail','','','','',0)";
+// Add Major Code profile field, if it doesn't exist
+  $profile = db_result(db_query("SELECT name FROM {profile_fields} WHERE name='profile_major_code'"));
+  if (!$profile) {
+    $query = "INSERT INTO {profile_fields} VALUES ('','Major Code','profile_major_code','','asu_ldap_roles','','textfield',0,0,0,4,0,'')";
     db_query($query);
-
+  }
+// Add ASU LDAP Server, if it doesn't exist
+  $server = db_result(db_query("SELECT server FROM {ldapauth} WHERE server='ds.asu.edu'"));
+  if (!$server) {
+    $query = "INSERT INTO {ldapauth} VALUES ('','asu_ldap',1,'ds.asu.edu',389,0,0,'ou=People,o=asu.edu','asuriteid','mail','','','','',0)";
+    db_query($query);
+  }
 // Add Campus Vocabulary, if it doesn't exist.
   $vid = db_result(db_query("SELECT vid from {vocabulary} WHERE name = 'Campus'"));
 
