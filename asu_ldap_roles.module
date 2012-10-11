@@ -32,15 +32,25 @@ function asu_ldap_roles_perm() {
  */
 function asu_ldap_roles_user($op, &$edit, &$account) {
   switch($op) {
-    case 'insert':
     case 'submit':
-      $tempe = explode("\n", variable_get('asu_ldap_roles_tempe'));
-      $downtown = explode("\n", variable_get('asu_ldap_roles_downtown'));
+    case 'login':
+      $tempe = explode("\n", variable_get('asu_ldap_roles_tempe', ''));
+      $downtown = explode("\n", variable_get('asu_ldap_roles_downtown', ''));
+      // Remove Downtown and Tempe Roles
+      unset($edit['roles'][1419717644]);
+      unset($edit['roles'][1368107126]);
+      watchdog('test' , $op . ' ' . 'major_code: ' . $account->profile_major_code);
       if (in_array($account->profile_major_code, $downtown)) {
+        // Add Downtown Role
         $edit['roles'][1419717644] = 'Downtown';
+        user_save($account, $edit);
+        watchdog('test', 'downtown match:' . $account->profile_major_code);
       }
       if (in_array($account->profile_major_code, $tempe)) {
+        // Add Tempe Role
         $edit['roles'][1368107126] = 'Tempe';
+        user_save($account, $edit);
+        watchdog('test', 'tempe match:' . $account->profile_major_code);
       }
       break;
   }

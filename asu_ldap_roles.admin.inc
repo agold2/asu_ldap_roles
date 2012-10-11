@@ -62,8 +62,8 @@ function asu_ldap_roles_admin_settings_submit($form, &$form_state) {
     case t('Save Configuration'):
       //$downtown_major_codes = array();
       //$downtown_major_codes = explode("\n", $values['asu_ldap_roles_downtown_majorcodes']);
-      $downtown = $values['asu_ldap_roles_downtown'];
-      $tempe = $values['asu_ldap_roles_tempe'];
+      $downtown = trim($values['asu_ldap_roles_downtown']);
+      $tempe = trim($values['asu_ldap_roles_tempe']);
       
       variable_set('asu_ldap_roles_downtown', $downtown);
       variable_set('asu_ldap_roles_tempe', $tempe);
