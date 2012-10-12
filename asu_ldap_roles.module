@@ -35,7 +35,10 @@ function asu_ldap_roles_user($op, &$edit, &$account) {
     case 'submit':
     case 'login':
       $tempe = explode("\n", variable_get('asu_ldap_roles_tempe', ''));
+      $tempe = array_map('trim', $tempe);
       $downtown = explode("\n", variable_get('asu_ldap_roles_downtown', ''));
+      $downtown = array_map('trim', $downtown);
+
       // Remove Downtown and Tempe Roles
       unset($edit['roles'][1419717644]);
       unset($edit['roles'][1368107126]);
