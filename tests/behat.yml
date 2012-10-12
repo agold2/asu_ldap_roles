@@ -1,0 +1,22 @@
+# behat.yml
+default:
+  context:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url:    'https://eoss-dev.asu.edu'
+      goutte: ~
+      selenium2: ~
+
+qa:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'https://eoss-qa.asu.edu'
+      goutte: ~
+      selenium2: ~
+
+prod: 
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'https://eoss.asu.edu'
+      goutte: ~
+      selenium2: ~
