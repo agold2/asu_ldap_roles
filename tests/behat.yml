@@ -1,11 +1,11 @@
 # behat.yml
 default:
-  context:
   extensions:
     Behat\MinkExtension\Extension:
       base_url:    'https://eoss-dev.asu.edu'
       goutte: ~
       selenium2: ~
+
 
 qa:
   extensions:
@@ -20,3 +20,5 @@ prod:
       base_url: 'https://eoss.asu.edu'
       goutte: ~
       selenium2: ~
+imports:
+   - behat.local.yml
