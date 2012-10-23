@@ -1,0 +1,15 @@
+# behat.yml
+default:
+  context:
+    parameters:
+      drupal_users:
+        temp5826:
+          'password'
+        temp5827:
+          'password'
+
+  extensions:
+     Behat\MinkExtension\Extension:
+
+
+
