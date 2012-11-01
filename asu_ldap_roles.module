@@ -89,6 +89,12 @@ function asu_ldap_roles_block($op = 'list', $delta = 0, $edit = array()) {
               break;
           }    
   }
+       if ($node->path == 'nyt') || ($node=>path == 'NYT') {
           return $block;
+       } 
+       else {
+         return FALSE;
+       }
+	      
 }
 
